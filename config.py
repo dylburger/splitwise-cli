@@ -26,17 +26,67 @@ class YAMLParser():
 
 class SplitwiseConfigParser(YAMLParser):
 
-    def __init__(self):
-        YAMLParser.__init__(self, CONFIG_FILE)
+    def __init__(self, f=CONFIG_FILE):
+        YAMLParser.__init__(self, f)
+        self.authorize_endpoint = "%s%s" % \
+            (self.config['SPLITWISE_SITE'],
+             self.config['SPLITWISE_AUTHORIZE_URL'])
+
+        self.request_token_endpoint = "%s%s" % \
+            (self.config['SPLITWISE_SITE'],
+             self.config['SPLITWISE_REQUEST_TOKEN_URL'])
+
+        self.access_token_endpoint = "%s%s" % \
+            (self.config['SPLITWISE_SITE'],
+             self.config['SPLITWISE_ACCESS_TOKEN_URL'])
 
     def __repr__(self):
-        return 'SplitwiseConfigParser(%r)' % (self.config)
+        return 'SplitwiseConfigParser(AUTH: %s, REQUEST TOKEN: %s, ACCESS TOKEN: %s)' % \
+                (self.authorize_endpoint,
+                 self.request_token_endpoint,
+                 self.access_token_endpoint)
+
+    def get_authorize_endpoint(self):
+        """ Retrieves the authorize_endpoint instance variable
+        """
+        return self.authorize_endpoint
+
+    def get_request_token_endpoint(self):
+        """ Retrieves the request_token_endpoint instance variable
+        """
+        return self.request_token_endpoint
+
+    def get_access_token_endpoint(self):
+        """ Retrieves the access_token_endpoint instance variable
+        """
+        return self.access_token_endpoint
 
 
 class SplitwiseAPICredentialsParser(YAMLParser):
 
-    def __init__(self):
-        YAMLParser.__init__(self, CREDENTIALS_FILE)
+    def __init__(self, f=CREDENTIALS_FILE):
+        YAMLParser.__init__(self, f)
+        self.splitwise_api_key = self.config['SPLITWISE_API_KEY']
+        self.splitwise_api_secret = self.config['SPLITWISE_API_SECRET']
+        self.callback_url = self.config['CALLBACK_URL']
 
     def __repr__(self):
-        return 'SplitwiseAPICredentialsParser(%r)' % (self.config)
+        """ Just print the API key to identify the Credentials,
+            don't print the secret
+        """
+        return 'SplitwiseAPICredentialsParser(%r)' % (self.splitwise_api_key)
+
+    def get_api_key(self):
+        """ Retrieves the splitwise_api_key instance variable
+        """
+        return self.splitwise_api_key
+
+    def get_api_secret(self):
+        """ Retrieves the splitwise_api_secret instance variable
+        """
+        return self.splitwise_api_secret
+
+    def get_callback_url(self):
+        """ Retrieves the callback_url instance variable
+        """
+        return self.callback_url
