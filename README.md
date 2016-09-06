@@ -1,4 +1,4 @@
-== Splitwise - add a new expense for a person, group
+# Splitwise CLI - add a new expense for a person, group
 
 In the effort to learn more about Python, OAuth, the Splitwise API, and builing a 
 command-line client in Python, I thought it would be fun to write a small client that 
